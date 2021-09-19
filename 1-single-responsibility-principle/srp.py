@@ -53,8 +53,22 @@ class PersistenceManager:
     This class can grow with checks about file permissions, etc.
     without making the ShoppingList class bigger and bigger.
     """
-	@staticmethod
+    @staticmethod
     def save_to_file(journal, filename):
         file = open(filename, "w")
         file.write(str(journal))
         file.close()
+
+
+if __name__ == "__main__":
+    shopping_list = ShoppingList()
+    shopping_list.add_entry("bread")
+    shopping_list.add_entry("phone")
+    print(f"Shopping List entries:\n{shopping_list}\n")
+
+    p = PersistenceManager()
+    file = "/tmp/shopping-list.txt"
+    p.save_to_file(shopping_list, file)
+    # Verify.
+    with open(file) as fh:
+        print(fh.read())

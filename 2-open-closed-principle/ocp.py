@@ -59,8 +59,19 @@ class Specification:
     def is_satisfied(self, item):
         pass
 
-    # __and__ operator makes life easier than use AndSpecificationWorse.
     def __and__(self, other):
+        """
+        __and__ operator makes life easier than use AndSpecificationWorse.
+
+        We cannot use `and`:
+
+            >>> large_blue = large and ColorSpecification(Color.BLUE)
+
+        we have to use `&`:
+
+            >>> large_blue = large & ColorSpecification(Color.BLUE)
+
+        """
         return AndSpecification(self, other)
 
 
@@ -185,33 +196,31 @@ if __name__ == "__main__":
     
     # Correct filter.
 
+    def show_filter(products, specification, message):
+        for p in bf.filter(products, specification):
+            print(f' - {p.name} {message}')
+
     bf = BetterFilter()
     
     print('Green products (new):')
     green = ColorSpecification(Color.GREEN)
-    for p in bf.filter(products, green):
-        print(f' - {p.name} is green')
+    show_filter(products, green, "is green")
     
     print('Large products:')
     large = SizeSpecification(Size.LARGE)
-    for p in bf.filter(products, large):
-        print(f' - {p.name} is large')
+    show_filter(products, large, "is large")
     
     print('Large blue items:')
     large_blue = large & ColorSpecification(Color.BLUE)
-    for p in bf.filter(products, large_blue):
-        print(f' - {p.name} is large and blue')
+    show_filter(products, large_blue, "is large and blue")
     large_blue_worse = AndSpecificationWorse(large, ColorSpecification(Color.BLUE))
-    for p in bf.filter(products, large_blue_worse):
-        print(f' - {p.name} is large and blue (using worse Specification)')
+    show_filter(products, large_blue_worse, "is large and blue (using worse Specification)")
 
     print('Large blue house items:')
-    # We cannot use `and` we have to use `&`.
     large_blue_house = large_blue & NameSpecification("house")
-    for p in bf.filter(products, large_blue):
-        print(f' - {p.name} is large and blue house')
+    show_filter(products, large_blue_house, "is large and blue house")
     # We can use more than two specifications with the worse class.
     # You can comment the `__and__` of the `Specification` class to be sure.
     large_blue_house_worse = AndSpecificationWorse(large_blue_worse, NameSpecification("house"))
-    for p in bf.filter(products, large_blue_house_worse):
-        print(f' - {p.name} is large and blue house (using worse Specification)')
+    show_filter(products, large_blue_house_worse, "is large and blue house (using worse Specification)")
+

@@ -122,7 +122,7 @@ class AndSpecificationWorse(Specification):
     For me, it looks clearer when 
     working with more than two specifications because
     this class seems to be able to work only with two specifications
-    but it can be called more times to add more than two specifications.
+    but it can be called multiple times to add more than two specifications.
     """
 
     def __init__(self, spec1, spec2):

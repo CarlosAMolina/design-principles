@@ -23,6 +23,7 @@ class MultiFunctionPrinter(Machine):
     def scan(self, document):
         pass
 
+
 # But, other classes do not need all the previous interface methods.
 class OldFashionedPrinter(Machine):
     def print(self, document):
@@ -34,24 +35,26 @@ class OldFashionedPrinter(Machine):
 
     def scan(self, document):
         """Not supported!"""
-        raise NotImplementedError('Printer cannot scan!')
+        raise NotImplementedError("Printer cannot scan!")
 
 
 # It's better to create a class for each action.
 class Printer:
     @abstractmethod
-    def print(self, document): pass
+    def print(self, document):
+        pass
 
 
 class Scanner:
     @abstractmethod
-    def scan(self, document): pass
+    def scan(self, document):
+        pass
 
 
 # Same for Fax, etc.
 
 
-# Now, each derived class can inherit from the required interfaces, 
+# Now, each derived class can inherit from the required interfaces,
 # implementing only the methods to use.
 class MyPrinter(Printer):
     def print(self, document):

@@ -67,7 +67,7 @@ if __name__ == "__main__":
     child1 = Person('Chris')
     child2 = Person('Matt')
 
-    # Low-level modulel
+    # Low-level module.
     relationships = Relationships()
     relationships.add_parent_and_child(parent, child1)
     relationships.add_parent_and_child(parent, child2)
